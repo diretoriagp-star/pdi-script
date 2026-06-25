@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Script PDI — Empresa JR ADM UFBA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #0420BF;
+    --amarelo: #F6D42A;
+    --branco: #F5F5F5;
+    --preto: #000000;
+    --azul-escuro: #030f7a;
+    --azul-claro: #e8ebff;
+    --azul-medio: #c5ccf7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--branco);
+    color: var(--preto);
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .site-header {
+    background: var(--azul);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-ticker {
+    background: var(--amarelo);
+    color: var(--preto);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 6px 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 30s linear infinite;
+    padding-left: 100%;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .header-body {
+    padding: 2.5rem 3rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .header-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--amarelo);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .header-text p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 440px;
+    line-height: 1.5;
+  }
+  .header-badge {
+    background: var(--amarelo);
+    color: var(--azul);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 99px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Layout */
+  .wrapper { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+  /* Section label */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+  .section-label .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--azul);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-label span {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--azul);
+  }
+
+  /* Cards */
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid #e8ebff;
+  }
+
+  /* Fields */
+  .field { margin-bottom: 1rem; }
+  .field:last-child { margin-bottom: 0; }
+  label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  input[type="text"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: 10px 13px;
+    border: 2px solid #dde0f5;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-family: 'Nunito', sans-serif;
+    color: var(--preto);
+    background: #fafbff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(4,32,191,0.1);
+    background: white;
+  }
+  textarea { min-height: 70px; resize: vertical; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .tag-optional {
+    font-size: 0.65rem;
+    background: var(--azul-claro);
+    color: var(--azul);
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-left: 5px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* PA Blocks */
+  .pa-block {
+    background: white;
+    border-radius: 16px;
+    border: 2px solid #dde0f5;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .pa-block:focus-within { border-color: var(--azul); }
+  .pa-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1.5rem;
+    background: var(--azul);
+  }
+  .pa-header-left { display: flex; align-items: center; gap: 10px; flex: 1; }
+  .pa-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--amarelo);
+    color: var(--preto);
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .pa-title-input {
+    border: 2px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.12);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 8px;
+    flex: 1;
+    font-family: 'Nunito', sans-serif;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .pa-title-input:focus { outline: none; border-color: var(--amarelo); background: rgba(255,255,255,0.2); }
+  .pa-title-input::placeholder { color: rgba(255,255,255,0.55); font-weight: 400; }
+  .pa-body { padding: 1.25rem 1.5rem; }
+  .btn-remove-pa {
+    background: none;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    font-family: 'Nunito', sans-serif;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    transition: all 0.12s;
+    flex-shrink: 0;
+  }
+  .btn-remove-pa:hover { background: rgba(255,255,255,0.15); color: white; }
+
+  .btn-add-pa {
+    width: 100%;
+    padding: 13px;
+    background: var(--azul-claro);
+    border: 2px dashed var(--azul-medio);
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    color: var(--azul);
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 1.25rem;
+  }
+  .btn-add-pa:hover { background: #d0d6f9; border-color: var(--azul); }
+
+  /* Membros */
+  .filters-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .filter-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 130px; }
+  .filter-group label { font-size: 0.68rem; color: #666; }
+  .filter-group select { font-size: 0.82rem; padding: 7px 10px; }
+  .search-members {
+    margin-bottom: 10px; padding: 10px 14px;
+    border: 2px solid #dde0f5; border-radius: 10px;
+    width: 100%; font-size: 0.88rem; font-family: 'Nunito', sans-serif;
+    background: #fafbff;
+  }
+  .search-members:focus { outline: none; border-color: var(--azul); }
+  .select-actions { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; flex-wrap: wrap; }
+  .btn-small {
+    padding: 5px 12px; border: 2px solid #dde0f5; border-radius: 8px;
+    background: white; font-size: 0.75rem; font-family: 'Nunito', sans-serif;
+    font-weight: 600; cursor: pointer; color: #555; transition: all 0.12s;
+  }
+  .btn-small:hover { border-color: var(--azul); color: var(--azul); }
+  .selected-count { font-size: 0.78rem; color: var(--azul); font-weight: 700; margin-left: auto; }
+  .visible-count { font-size: 0.75rem; color: #aaa; }
+
+  .members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 8px; max-height: 360px; overflow-y: auto; padding: 4px;
+  }
+  .member-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 9px 11px; border: 2px solid #dde0f5; border-radius: 10px;
+    cursor: pointer; transition: all 0.12s; background: #fafbff;
+  }
+  .member-item:hover { border-color: var(--azul-medio); background: var(--azul-claro); }
+  .member-item.selected { border-color: var(--azul); background: var(--azul-claro); }
+  .member-item input[type="checkbox"] { accent-color: var(--azul); width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px; }
+  .member-name { font-size: 0.8rem; font-weight: 700; line-height: 1.3; color: #111; }
+  .member-meta { font-size: 0.68rem; color: #777; margin-top: 2px; }
+  .member-badge {
+    display: inline-block; font-size: 0.62rem; padding: 2px 7px;
+    border-radius: 99px; margin-top: 3px; font-weight: 700;
+  }
+  .badge-tático { background: var(--amarelo); color: var(--preto); }
+  .badge-consultoria { background: var(--azul); color: white; }
+  .badge-especialista { background: var(--azul-escuro); color: var(--amarelo); }
+  .empty-state { text-align: center; padding: 2rem; color: #aaa; font-size: 0.85rem; grid-column: 1 / -1; }
+
+  /* Botão gerar */
+  .btn-generate {
+    width: 100%;
+    padding: 15px;
+    background: var(--azul);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+  .btn-generate:hover { background: var(--azul-escuro); transform: translateY(-1px); }
+  .btn-generate:active { transform: translateY(0); }
+
+  /* Resultado */
+  .result-area { display: none; }
+  .result-card {
+    background: var(--preto);
+    border-radius: 16px;
+    padding: 1.75rem 2rem;
+    margin-top: 1.25rem;
+    position: relative;
+    border: 3px solid var(--amarelo);
+  }
+  .result-card h2 {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--amarelo); margin-bottom: 1rem;
+  }
+  .script-output {
+    font-family: 'Courier New', monospace; font-size: 0.78rem;
+    line-height: 1.7; white-space: pre; overflow-x: auto; color: #c8d6f0;
+  }
+  .btn-copy {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    padding: 7px 16px; background: var(--amarelo); color: var(--preto);
+    border: none; border-radius: 8px; font-size: 0.8rem; font-weight: 700;
+    font-family: 'Nunito', sans-serif; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-copy:hover { opacity: 0.85; }
+
+  /* Footer */
+  .footer-card {
+    margin-top: 2rem;
+    padding: 1.5rem 2rem;
+    background: var(--azul);
+    border-radius: 16px;
+    color: white;
+  }
+  .footer-label {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--amarelo); margin-bottom: 10px; display: block;
+  }
+  .footer-card p { font-size: 0.85rem; color: rgba(255,255,255,0.85); line-height: 1.6; }
+  .footer-card a { color: var(--amarelo); text-decoration: none; font-weight: 600; }
+  .footer-card a:hover { text-decoration: underline; }
+
+  /* Grupo destino highlight */
+  .grupo-field select {
+    border-color: var(--azul);
+    background: var(--azul-claro);
+    font-weight: 600;
+    color: var(--azul);
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="header-ticker">
+    <span class="ticker-inner">Donos de Sonhos &nbsp;·&nbsp; Singular &nbsp;·&nbsp; Envolvimento &nbsp;·&nbsp; Inquietação &nbsp;·&nbsp; Só Faça &nbsp;·&nbsp; Sintonia &nbsp;·&nbsp; Primeira Empresa Júnior da Bahia &nbsp;·&nbsp; 1989 &nbsp;·&nbsp; Donos de Sonhos &nbsp;·&nbsp; Singular &nbsp;·&nbsp; Envolvimento &nbsp;·&nbsp; Inquietação &nbsp;·&nbsp; Só Faça &nbsp;·&nbsp; Sintonia &nbsp;·&nbsp; Primeira Empresa Júnior da Bahia &nbsp;·&nbsp; 1989 &nbsp;·&nbsp;</span>
+  </div>
+  <div class="header-body">
+    <div class="header-text">
+      <h1>Gerador de Script PDI</h1>
+      <p>Preencha os planos de ação, selecione os membros e receba o script pronto para colar no Playground da API do Monday.</p>
+    </div>
+    <span class="header-badge">Empresa JR ADM UFBA</span>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <div id="pa-list"></div>
+  <button class="btn-add-pa" onclick="addPA()">+ Adicionar plano de ação</button>
+
+  <div class="card">
+    <div class="section-label"><span class="num">2</span><span>Membros</span></div>
+    <input class="search-members" type="text" id="search_members" placeholder="Buscar membro pelo nome..." oninput="applyFilters()" />
+    <div class="filters-row">
+      <div class="filter-group">
+        <label>Nível</label>
+        <select id="f_nivel" onchange="applyFilters()">
+          <option value="">Todos</option>
+          <option value="Tático">Tático</option>
+          <option value="Consultoria">Consultoria</option>
+          <option value="Consultoria Especialista">Consultoria Especialista</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Área</label>
+        <select id="f_area" onchange="applyFilters()">
+          <option value="">Todas</option>
+          <option value="Consultoria">Consultoria</option>
+          <option value="Gestão de Pessoas">Gestão de Pessoas</option>
+          <option value="Mercado">Mercado</option>
+          <option value="Operações">Operações</option>
+          <option value="Presidência">Presidência</option>
+          <option value="Projetos">Projetos</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Cargo</label>
+        <select id="f_cargo" onchange="applyFilters()">
+          <option value="">Todos</option>
+          <option value="Consultor(a)">Consultor(a)</option>
+          <option value="Consultor(a) Especialista">Consultor(a) Especialista</option>
+          <option value="CX">CX</option>
+          <option value="Gerente Comercial">Gerente Comercial</option>
+          <option value="Gerente Financeiro">Gerente Financeiro</option>
+          <option value="Gerente de Captação">Gerente de Captação</option>
+          <option value="Gerente de Conexões">Gerente de Conexões</option>
+          <option value="Gerente de Desenvolvimento">Gerente de Desenvolvimento</option>
+          <option value="Gerente de Eventos">Gerente de Eventos</option>
+          <option value="Gerente de Marketing">Gerente de Marketing</option>
+          <option value="Gerente de Performance">Gerente de Performance</option>
+          <option value="Gerente de Produtos">Gerente de Produtos</option>
+          <option value="Gerente de Projetos">Gerente de Projetos</option>
+          <option value="Gerente de Relacionamento">Gerente de Relacionamento</option>
+          <option value="Head de Projetos">Head de Projetos</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Leva</label>
+        <select id="f_leva" onchange="applyFilters()">
+          <option value="">Todas</option>
+          <option value="2025.1">Leva 2025.1</option>
+          <option value="2025.2">Leva 2025.2</option>
+          <option value="2026.1">Leva 2026.1</option>
+        </select>
+      </div>
+    </div>
+    <div class="select-actions">
+      <button class="btn-small" onclick="selectVisible()">Selecionar visíveis</button>
+      <button class="btn-small" onclick="selectAll()">Selecionar todos</button>
+      <button class="btn-small" onclick="clearAll()">Limpar seleção</button>
+      <span class="visible-count" id="visible_count"></span>
+      <span class="selected-count" id="selected_count">0 selecionados</span>
+    </div>
+    <div class="members-grid" id="members_grid"></div>
+  </div>
+
+  <button class="btn-generate" onclick="generate()">⚡ Gerar script</button>
+
+  <div class="result-area" id="result_area">
+    <div class="result-card">
+      <h2>Script gerado — copie e cole no Playground da API</h2>
+      <button class="btn-copy" onclick="copyScript()">Copiar</button>
+      <pre class="script-output" id="script_output"></pre>
+    </div>
+  </div>
+
+  <div class="footer-card">
+    <span class="footer-label">Informações</span>
+    <p>Sistema de códigos e scripts desenvolvido por <strong>Vinícius Peixoto</strong>. Qualquer dúvida, erro ou necessidade de atualização, segue as informações para contato:</p>
+    <p style="margin-top:8px;">📱 <strong>WhatsApp:</strong> <a href="https://wa.me/5575983597483">75 98359-7483</a></p>
+    <p style="margin-top:4px;">✉️ <strong>E-mail:</strong> <a href="mailto:viniciuspeixotobaiano@gmail.com">viniciuspeixotobaiano@gmail.com</a></p>
+  </div>
+
+</div>
+
+<script>
+const MEMBERS = [
+  {name:"Bruno Brasileiro dos Santos",id:"18419216444",nivel:"Consultoria Especialista",area:"Consultoria",cargo:"Consultor(a) Especialista",leva:"2025.2"},
+  {name:"Enzo De Oliveira Machado",id:"18419216903",nivel:"Consultoria Especialista",area:"Consultoria",cargo:"Consultor(a) Especialista",leva:"2025.2"},
+  {name:"João Gabriel Ferraz Ribeiro Simões Gomes",id:"18419217765",nivel:"Consultoria Especialista",area:"Consultoria",cargo:"Consultor(a) Especialista",leva:"2025.2"},
+  {name:"Verônica de Oliveira Santos",id:"18419218472",nivel:"Consultoria Especialista",area:"Consultoria",cargo:"Consultor(a) Especialista",leva:"2025.2"},
+  {name:"Júlia da Cunha Santos",id:"18419253493",nivel:"Consultoria Especialista",area:"Consultoria",cargo:"Consultor(a) Especialista",leva:"2025.2"},
+  {name:"Matheus Pereira dos Santos",id:"18419253560",nivel:"Consultoria Especialista",area:"Consultoria",cargo:"Consultor(a) Especialista",leva:"2025.2"},
+  {name:"Nathalia Nascimento Pedreira",id:"18419253652",nivel:"Consultoria Especialista",area:"Consultoria",cargo:"Consultor(a) Especialista",leva:"2025.2"},
+  {name:"Paloma Brittes de Jesus Barbosa",id:"18419253708",nivel:"Consultoria Especialista",area:"Consultoria",cargo:"Consultor(a) Especialista",leva:"2025.2"},
+  {name:"Vitor Bessa dos Santos",id:"18419253777",nivel:"Consultoria Especialista",area:"Consultoria",cargo:"Consultor(a) Especialista",leva:"2025.2"},
+  {name:"Gustavo Carvalho Conceição",id:"18419221618",nivel:"Tático",area:"Presidência",cargo:"Gerente de Performance",leva:"2025.2"},
+  {name:"Beatriz Moura Alves Chastinet",id:"18419222183",nivel:"Tático",area:"Gestão de Pessoas",cargo:"Gerente de Captação",leva:"2025.2"},
+  {name:"Yasmin Pereira Viterbo",id:"18419223896",nivel:"Tático",area:"Gestão de Pessoas",cargo:"Gerente de Conexões",leva:"2025.1"},
+  {name:"Francisco da Quixaba Pinto Regis",id:"18419223153",nivel:"Tático",area:"Projetos",cargo:"CX",leva:"2025.1"},
+  {name:"Pedro Gabriel Vasconcelos Guimarães",id:"18419218953",nivel:"Tático",area:"Presidência",cargo:"Gerente de Eventos",leva:"2025.2"},
+  {name:"Antônio Nascimento Negrão de Almeida",id:"18419221043",nivel:"Tático",area:"Projetos",cargo:"Gerente de Projetos",leva:"2025.1"},
+  {name:"Diego Chaves da Silva Lima Filho",id:"18419222707",nivel:"Tático",area:"Operações",cargo:"Gerente Financeiro",leva:"2025.1"},
+  {name:"Matheus Dourado Freitas",id:"18419219624",nivel:"Tático",area:"Mercado",cargo:"Gerente Comercial",leva:"2025.1"},
+  {name:"Gabriel Silvany de Azevedo",id:"18419251823",nivel:"Tático",area:"Presidência",cargo:"Gerente de Relacionamento",leva:"2025.2"},
+  {name:"Jorge Luís Gonçalves Vilas Boas Junior",id:"18419251915",nivel:"Tático",area:"Operações",cargo:"Gerente de Produtos",leva:"2025.2"},
+  {name:"Anabel Almeida Rivera Castro",id:"18419251976",nivel:"Tático",area:"Projetos",cargo:"Gerente de Projetos",leva:"2025.2"},
+  {name:"Anna Beatriz de Jesus Almeida",id:"18419252011",nivel:"Tático",area:"Mercado",cargo:"Gerente de Marketing",leva:"2025.2"},
+  {name:"Júlia Gutierres Baqueiro",id:"18419252201",nivel:"Tático",area:"Projetos",cargo:"Gerente de Projetos",leva:"2025.1"},
+  {name:"Gabriele Albuquerque dos Anjos",id:"18419252276",nivel:"Tático",area:"Projetos",cargo:"Gerente de Projetos",leva:"2025.1"},
+  {name:"Giovana Alagia Vaz Leandro",id:"18419252397",nivel:"Tático",area:"Projetos",cargo:"Head de Projetos",leva:"2025.1"},
+  {name:"Gustavo Sarkis Cerqueira Novis",id:"18419252480",nivel:"Tático",area:"Operações",cargo:"Gerente de Desenvolvimento",leva:"2025.1"},
+  {name:"Bento Caetano de Oliveira Leão",id:"18419252558",nivel:"Tático",area:"Projetos",cargo:"Gerente de Projetos",leva:"2025.1"},
+  {name:"Leticia Ferraz Cavalcanti Pereira",id:"18419252737",nivel:"Tático",area:"Mercado",cargo:"Gerente Comercial",leva:"2025.2"},
+  {name:"Maria Pinho Oliveira Schwab",id:"18419252866",nivel:"Tático",area:"Mercado",cargo:"Gerente Comercial",leva:"2025.2"},
+  {name:"Samira Porto Brandão",id:"18419252959",nivel:"Tático",area:"Projetos",cargo:"Gerente de Projetos",leva:"2025.2"},
+  {name:"Mariana Miranda Brito",id:"18419253013",nivel:"Tático",area:"Mercado",cargo:"Gerente de Marketing",leva:"2025.1"},
+  {name:"Ana Vitória Tufi de Moraes",id:"18419230887",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Antonio Rissatto Lago",id:"18419231660",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Bernardo Albuquerque Conceição",id:"18419232178",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Bruno Michel Jambeiro Lima de Oliveira",id:"18419232636",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Caio Dantas De Castro",id:"18419232981",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Daniel Tavares Barbosa",id:"18419233202",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Davi Henrique Mariani Wanderley Moreira",id:"18419233484",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Gabriel Almeida Leite Oliveira",id:"18419234988",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Gabriel Ribeiro Maia Cardoso",id:"18419235626",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Gisele Santana da Silva",id:"18419235990",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Guilherme Lavigne Paixão",id:"18419242409",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Henrique Araújo do Carmo",id:"18419242506",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Henrique Brasil Radelsberger",id:"18419242574",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Iago Paris Alves",id:"18419242640",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Isabelle Cerqueira Almeida Conceição",id:"18419242733",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Ítalo José Alves Doria",id:"18419242789",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"João Lucas de Amorim Conceição",id:"18419242837",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"João Pedro Batista Pimentel Lustoza",id:"18419242914",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Joao Pedro Silva de Souza",id:"18419242947",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"João Tertuliano Cardoso de Castro Neto",id:"18419243013",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"José Roberto Monteiro da Silva",id:"18419243049",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Leonardo Leão Silva Souza",id:"18419243154",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Luan Choucate Braga Santana",id:"18419243201",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Luis Miguel Moreira Santiago",id:"18419243260",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Luiza Fontes Mesquita de Oliveira",id:"18419243327",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Marcela Moraes Santos",id:"18419246949",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Maria Brandão Junqueira Rodrigues",id:"18419243506",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Maria Clara Buffone Lima Santos",id:"18419247010",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Marina Teixeira Pires",id:"18419247046",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Miguel Almeida Rodrigues",id:"18419247089",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Mila de Sant' Anna Paixão",id:"18419247252",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Natan Vitor dos Santos Oliveira",id:"18419247451",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Nina Azi Romano",id:"18419247592",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Sarah Almeida Lopes",id:"18419247809",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Tainá Alonso Catela Nery",id:"18419248247",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Theo Rodrigues Suarez",id:"18419248315",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+  {name:"Yan Nascimento de Jesus",id:"18419248390",nivel:"Consultoria",area:"Consultoria",cargo:"Consultor(a)",leva:"2026.1"},
+];
+
+let selected = new Set();
+let visibleIds = MEMBERS.map(m => m.id);
+let paCounter = 0;
+
+function sHTML(id, name, opts, optional=true) {
+  const tag = optional ? `<span class="tag-optional">opcional</span>` : '';
+  return `<div class="field"><label>${name} ${tag}</label><select id="${id}">${opts}</select></div>`;
+}
+
+function paFields(pid) {
+  return `
+    <div class="section-label" style="margin-bottom:1rem;"><span class="num" style="background:#0420BF">1</span><span style="color:#0420BF">Classificação</span></div>
+    <div class="grid-2">
+      ${sHTML('status_'+pid,'Status',`<option value="">— Deixar vazio —</option><option value="0">Em andamento</option><option value="1">Realizado</option><option value="2">Parado</option><option value="3">Pausado</option><option value="4">Cancelado</option>`)}
+      ${sHTML('realizador_'+pid,'Realizador(a)',`<option value="">— Deixar vazio —</option><option value="0">Mentor(a)</option><option value="1">Membro</option><option value="2">Gestor(a)</option>`)}
+      ${sHTML('nivel_'+pid,'Nível do PDI',`<option value="">— Deixar vazio —</option><option value="0">Liderança e Performance</option><option value="1">Ambientação e Desenvolvimento</option><option value="2">Carreira e Transição</option>`)}
+      ${sHTML('tipo_'+pid,'Tipo do PA',`<option value="">— Deixar vazio —</option><option value="0">Reativo</option><option value="1">Proativo</option>`)}
+    </div>
+    ${sHTML('categoria_'+pid,'Categoria do PA',`<option value="">— Deixar vazio —</option><option value="0">Gestão de Pessoas</option><option value="1">Estudos</option><option value="2">Mentor(a)</option><option value="3">Liderança/Gestor</option><option value="4">Membro</option><option value="6">Liderança de Squad</option><option value="7">Projetos</option><option value="8">Squad</option><option value="9">PDL</option><option value="10">EDITAL</option><option value="11">Obrigatório</option>`)}
+    <div class="field grupo-field">
+      <label>Grupo de destino</label>
+      <select id="grupo_${pid}">
+        <option value="">— Deixar vazio (grupo padrão) —</option>
+        <option value="group_mkw8a04w">[PDI] Planos de Ação (em andamento/parados)</option>
+        <option value="group_mm4ds61m">[PDI] Planos de Ação (obrigatórios)</option>
+        <option value="group_mm2a76dv">[PDI] Planos de Ação (realizados)</option>
+        <option value="group_mm4mha0m">[PDI] Planos de Ação (cancelados)</option>
+      </select>
+    </div>
+    <div class="field"><label>Indicador de sucesso <span class="tag-optional">opcional</span></label><textarea id="indicador_${pid}" placeholder="Descreva como será medido o sucesso deste PA..."></textarea></div>
+    <div class="grid-2">
+      <div class="field"><label>Data de criação <span class="tag-optional">opcional</span></label><input type="date" id="dcriacao_${pid}" /></div>
+      <div class="field"><label>Data de finalização <span class="tag-optional">opcional</span></label><input type="date" id="dfim_${pid}" /></div>
+      <div class="field"><label>Cronograma — início <span class="tag-optional">opcional</span></label><input type="date" id="cinicio_${pid}" /></div>
+      <div class="field"><label>Cronograma — fim <span class="tag-optional">opcional</span></label><input type="date" id="cfim_${pid}" /></div>
+    </div>
+    <div class="grid-2">
+      ${sHTML('kr_'+pid,'KR em foco',`<option value="">— Deixar vazio —</option><optgroup label="DGP"><option value="1">[DGP] KR1</option><option value="2">[DGP] KR2</option><option value="3">[DGP] KR3</option><option value="4">[DGP] KR4</option><option value="5">[DGP] KR5</option><option value="6">[DGP] KR6</option></optgroup><optgroup label="DOPER"><option value="7">[DOPER] KR1</option><option value="8">[DOPER] KR2</option><option value="9">[DOPER] KR3</option><option value="10">[DOPER] KR4</option><option value="11">[DOPER] KR5</option><option value="12">[DOPER] KR6</option></optgroup><optgroup label="DPSD"><option value="13">[DPSD] KR1</option><option value="14">[DPSD] KR2</option><option value="15">[DPSD] KR3</option><option value="16">[DPSD] KR4</option><option value="17">[DPSD] KR5</option><option value="18">[DPSD] KR6</option></optgroup><optgroup label="DPJTS"><option value="19">[DPJTS] KR1</option><option value="20">[DPJTS] KR2</option><option value="21">[DPJTS] KR3</option><option value="22">[DPJTS] KR4</option><option value="23">[DPJTS] KR5</option><option value="24">[DPJTS] KR6</option></optgroup><optgroup label="DMER"><option value="25">[DMER] KR1</option><option value="26">[DMER] KR2</option><option value="27">[DMER] KR3</option><option value="28">[DMER] KR4</option><option value="29">[DMER] KR5</option><option value="30">[DMER] KR6</option></optgroup>`)}
+      ${sHTML('pafoco_'+pid,"PA's em foco",`<option value="">— Deixar vazio —</option><option value="1">PA 1</option><option value="2">PA 2</option><option value="3">PA 3</option><option value="4">PA 4</option><option value="5">PA 5</option><option value="6">PA 6</option><option value="7">PA 7</option><option value="8">PA 8</option><option value="9">PA 9</option><option value="10">PA 10</option>`)}
+    </div>`;
+}
+
+function addPA() {
+  paCounter++;
+  const pid = paCounter;
+  const list = document.getElementById('pa-list');
+  const div = document.createElement('div');
+  div.className = 'pa-block';
+  div.id = 'pa-block-' + pid;
+  div.innerHTML = `
+    <div class="pa-header">
+      <div class="pa-header-left" style="flex-direction:column; align-items:flex-start; gap:4px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="pa-number">${list.children.length + 1}</span>
+          <span style="font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--amarelo);">Nome do plano de ação</span>
+        </div>
+        <input class="pa-title-input" type="text" id="nome_${pid}" placeholder="Ex: Participar de treinamento de liderança..." style="width:100%;" />
+      </div>
+      <button class="btn-remove-pa" onclick="removePA(${pid})">Remover</button>
+    </div>
+    <div class="pa-body">${paFields(pid)}</div>`;
+  list.appendChild(div);
+  renumberPAs();
+}
+
+function removePA(pid) { document.getElementById('pa-block-'+pid)?.remove(); renumberPAs(); }
+function renumberPAs() { document.querySelectorAll('.pa-block').forEach((el,i) => { el.querySelector('.pa-number').textContent = i+1; }); }
+function val(id) { const el = document.getElementById(id); return el ? el.value : ''; }
+
+function generate() {
+  const paBlocks = document.querySelectorAll('.pa-block');
+  if (!paBlocks.length) { alert('Adicione pelo menos um plano de ação.'); return; }
+  if (!selected.size) { alert('Selecione pelo menos um membro.'); return; }
+
+  const selectedMembers = MEMBERS.filter(m => selected.has(m.id));
+  let allLines = [];
+  let counter = 1;
+
+  paBlocks.forEach(block => {
+    const pid = block.id.replace('pa-block-', '');
+    const nome = val('nome_'+pid).trim();
+    if (!nome) return;
+    const nomeEsc = nome.replace(/\\/g,'\\\\').replace(/"/g,'\\"');
+    const indicador = val('indicador_'+pid).trim().replace(/\\/g,'\\\\').replace(/"/g,'\\"');
+    const status=val('status_'+pid), realizador=val('realizador_'+pid), nivel=val('nivel_'+pid);
+    const tipo=val('tipo_'+pid), categoria=val('categoria_'+pid), grupo=val('grupo_'+pid);
+    const dcriacao=val('dcriacao_'+pid), dfim=val('dfim_'+pid);
+    const cinicio=val('cinicio_'+pid), cfim=val('cfim_'+pid);
+    const kr=val('kr_'+pid), pafoco=val('pafoco_'+pid);
+
+    selectedMembers.forEach(m => {
+      let cols = {};
+      if (status!=='') cols['color_mm2af7bg']=`{\\"index\\": ${status}}`;
+      if (realizador!=='') cols['color_mm2ak6fp']=`{\\"index\\": ${realizador}}`;
+      if (nivel!=='') cols['color_mkxe26ys']=`{\\"index\\": ${nivel}}`;
+      if (categoria!=='') cols['color_mm2ac9nc']=`{\\"index\\": ${categoria}}`;
+      if (tipo!=='') cols['color_mm2axcxh']=`{\\"index\\": ${tipo}}`;
+      if (dcriacao) cols['date_mm2q6wjf']=`{\\"date\\": \\"${dcriacao}\\"}`;
+      if (cinicio&&cfim) cols['timerange_mm2a87bq']=`{\\"from\\": \\"${cinicio}\\", \\"to\\": \\"${cfim}\\"}`;
+      if (dfim) cols['date_mm3zcvst']=`{\\"date\\": \\"${dfim}\\"}`;
+      if (indicador) cols['long_text_mm3z8ew2']=`{\\"text\\": \\"${indicador}\\"}`;
+      if (kr) cols['dropdown_mm3133ht']=`{\\"ids\\": [${kr}]}`;
+      if (pafoco) cols['dropdown_mm31k6er']=`{\\"ids\\": [${pafoco}]}`;
+      const colStr = Object.entries(cols).map(([k,v])=>`\\"${k}\\": ${v}`).join(', ');
+      const groupPart = grupo ? `\n    group_id: "${grupo}"` : '';
+      allLines.push(`  item${counter}: create_item(\n    board_id: ${m.id}${groupPart}\n    item_name: "${nomeEsc}"\n    column_values: "{${colStr}}"\n  ) { id }`);
+      counter++;
+    });
+  });
+
+  if (!allLines.length) { alert('Preencha o nome de pelo menos um PA.'); return; }
+  const script = `mutation {\n${allLines.join('\n')}\n}`;
+  document.getElementById('script_output').textContent = script;
+  document.getElementById('result_area').style.display = 'block';
+  document.getElementById('result_area').scrollIntoView({behavior:'smooth'});
+}
+
+function copyScript() {
+  navigator.clipboard.writeText(document.getElementById('script_output').textContent).then(()=>{
+    const btn = document.querySelector('.btn-copy');
+    btn.textContent='Copiado!';
+    setTimeout(()=>btn.textContent='Copiar',2000);
+  });
+}
+
+function badgeClass(nivel) {
+  if (nivel==='Tático') return 'badge-tático';
+  if (nivel==='Consultoria Especialista') return 'badge-especialista';
+  return 'badge-consultoria';
+}
+
+function applyFilters() {
+  const search = document.getElementById('search_members').value.toLowerCase();
+  const fN=document.getElementById('f_nivel').value, fA=document.getElementById('f_area').value;
+  const fC=document.getElementById('f_cargo').value, fL=document.getElementById('f_leva').value;
+  const filtered = MEMBERS.filter(m =>
+    m.name.toLowerCase().includes(search) &&
+    (!fN||m.nivel===fN) && (!fA||m.area===fA) && (!fC||m.cargo===fC) && (!fL||m.leva===fL)
+  );
+  visibleIds = filtered.map(m=>m.id);
+  renderMembers(filtered);
+}
+
+function renderMembers(list) {
+  const grid = document.getElementById('members_grid');
+  document.getElementById('visible_count').textContent = list.length+' visíveis';
+  if (!list.length) { grid.innerHTML='<div class="empty-state">Nenhum membro encontrado.</div>'; return; }
+  grid.innerHTML = list.map(m=>`
+    <div class="member-item ${selected.has(m.id)?'selected':''}" onclick="toggleMember('${m.id}',this)">
+      <input type="checkbox" ${selected.has(m.id)?'checked':''} onclick="event.stopPropagation();toggleMember('${m.id}',this.closest('.member-item'))">
+      <div>
+        <div class="member-name">${m.name}</div>
+        <div class="member-meta">${m.cargo} · ${m.area}</div>
+        <span class="member-badge ${badgeClass(m.nivel)}">${m.nivel} · Leva ${m.leva}</span>
+      </div>
+    </div>`).join('');
+  updateCount();
+}
+
+function toggleMember(id,el) {
+  const cb=el.querySelector('input[type="checkbox"]');
+  if (selected.has(id)) { selected.delete(id); el.classList.remove('selected'); if(cb) cb.checked=false; }
+  else { selected.add(id); el.classList.add('selected'); if(cb) cb.checked=true; }
+  updateCount();
+}
+function updateCount() { document.getElementById('selected_count').textContent=selected.size+' selecionado'+(selected.size!==1?'s':''); }
+function selectVisible() { visibleIds.forEach(id=>selected.add(id)); applyFilters(); }
+function selectAll() { MEMBERS.forEach(m=>selected.add(m.id)); applyFilters(); }
+function clearAll() { selected.clear(); applyFilters(); }
+
+addPA();
+applyFilters();
+</script>
+</body>
+</html>
